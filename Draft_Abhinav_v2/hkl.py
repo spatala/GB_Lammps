@@ -7,6 +7,8 @@ import pickle
 import os
 from five_param_fz import five_param_fz
 
+import GBpy as gbp
+
 def hkl(mesh_size, sigma_val, lat_type):
 
     ### Creating an instance of lattice class
@@ -16,12 +18,12 @@ def hkl(mesh_size, sigma_val, lat_type):
 
     ### Creating a meshgrid of boundry plane miller indices in CSL lattice
     r = mesh_size
-    x_csl = np.arange(-6*r, 6*r+1, 1.0)
-    y_csl = np.arange(-2*r, 2*r+1, 1.0)
+    x_csl = np.arange(-r, r+1, 1.0)
+    y_csl = np.arange(-r, r+1, 1.0)
+    z_csl = np.arange(-r, r+1, 1.0)
+    num_mi = np.size(x_csl)*np.size(y_csl)*np.size(z_csl)
     # z_csl = np.arange(0, r+1, 1.0)
     # num_mi = ((2*r+1)**2)*(r+1)
-    z_csl = np.arange(-18*r, 18*r+1, 1.0)
-    num_mi = np.size(x_csl)*np.size(y_csl)*np.size(z_csl)
     # num_mi = ((2*r+1)**3)
 
     xx_csl, yy_csl, zz_csl = np.meshgrid(x_csl, y_csl, z_csl, indexing='xy')
@@ -39,8 +41,13 @@ def hkl(mesh_size, sigma_val, lat_type):
     # n = 5; mil_ind_csl = np.vstack((mil_ind_csl, (np.array([[1, 0, 2**n], [1, 1, 2**n], [2, 3, 2**n], [1, 2, 2**n], [2, 5, 2**n], [1, 3, 2**n], [1, 4, 2**n], [1, 6, 2**n], [1, 9, 2**n], [1, 15, 2**n], [1, 32**n, 2**n], [3, 5, 2**n], [4, 5, 2**n], [10, 11, 2**n] ]))))
     # print mil_ind_csl
 
-    main_path = os.getcwd()
-    pkl_path = main_path + '/GBpy/pkl_files//cF_Id_csl_common_rotations.pkl'
+    import inspect
+    gb_dir = os.path.dirname(inspect.getfile(gbp))
+    print gb_dir
+
+    # main_path = os.getcwd()
+
+    pkl_path =  gb_dir + '/pkl_files//cF_Id_csl_common_rotations.pkl'
     pkl_content = pickle.load(open(pkl_path))
     ### improve for multiple misorientations per sigma
     if len(pkl_content[str(sigma_val)]["N"]) == 1:

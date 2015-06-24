@@ -2,14 +2,20 @@ import numpy as np
 import math
 import os
 import pickle
+import GBpy as gbp
 import GBpy.tools as GBt
 from GBpy import integer_manipulations as int_man
 
 def pick_fz_bpl(bp_norms_go1, bp_symm_grp, symm_grp_ax, x_tol):
 
     x_g = (symm_grp_ax[:, 0]); y_g = symm_grp_ax[:, 1]; z_g = symm_grp_ax[:, 2]
-    main_path = os.getcwd()
-    pkl_path = main_path + '/GBpy/pkl_files/'
+    # main_path = os.getcwd()
+    # pkl_path = main_path + '/GBpy/pkl_files/'
+
+    import inspect
+    gb_dir = os.path.dirname(inspect.getfile(gbp))
+    pkl_path = gb_dir + '/pkl_files/'
+
     if bp_symm_grp == 'C_s':
         file_name = 'symm_mats_Cs.pkl'
         file_path = pkl_path + file_name
