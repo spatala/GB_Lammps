@@ -21,13 +21,6 @@ def sphr2cube_3d(quat):
 
     return pt_cube
 
-def sphr2cube_3dv2(quat):
-    theta = 2*np.arccos(GBqt.getq0(quat))
-    f_of_t = (0.75*(theta - np.sin(theta)))**(1.0/3)
-    xyz = np.column_stack([GBqt.getq1(quat), GBqt.getq2(quat), GBqt.getq3(quat)])/np.sin(theta/2.0).reshape(len(theta), 1)
-    XYZ = f_of_t.reshape(len(f_of_t), 1)*xyz
-    pt_cube = ball2cube(XYZ)
-    return pt_cube
 def cube2sphr_3d(pt):
     pt_ball = cube2ball(pt)
     rho_sq = pt_ball[:, 0]**2 + pt_ball[:, 1]**2 + pt_ball[:, 2]**2
